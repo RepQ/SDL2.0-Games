@@ -25,6 +25,8 @@
 
 #define MAX_PLAYERS (1)
 
+#include <SDL2/SDL_ttf.h>
+
 typedef enum
 {
     DEMON = 0,
@@ -36,6 +38,8 @@ typedef enum
 typedef struct
 {
     SDL_Scancode KeyPressed;
+    TTF_Font *font;
+    SDL_Color color;
     /*Varibale encargada de llevar el estado del juego*/
     int state;
     /*Varibale encargada de almacenar el deltaTime correspondiente en cada frame*/
@@ -47,6 +51,8 @@ typedef struct
     SDL_Window *window;
     /*Puntero que almacena el renderer creado*/
     SDL_Renderer *render;
+    SDL_Surface *textSurface;
+    SDL_Texture *textTexture;
     /*          BACKGROUNDS             */
     /*Puntero que almacena un array de surfaces para los backgrounds*/
     SDL_Surface *surface[MAX_BACKGROUNDS];
@@ -71,5 +77,6 @@ typedef struct
     int actualState;
     int nextState;
     int click;
+    SDL_Rect buttonBox;
 } Buttons;
 #endif

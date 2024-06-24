@@ -20,6 +20,10 @@ void CreatePlayButton()
     play.nextState = 2;
     play.click = 0;
 
+    play.buttonBox.x = play.posX;
+    play.buttonBox.y = play.posY;
+    play.buttonBox.w = WIDTH_BUTTON;
+    play.buttonBox.h = HEIGHT_BUTTON;
     buttons[countButton] = play;
     countButton++;
 }
@@ -33,6 +37,10 @@ void CreateMenuButton()
     menu.nextState = 1;
     menu.click = 0;
 
+    menu.buttonBox.x = menu.posX;
+    menu.buttonBox.y = menu.posY;
+    menu.buttonBox.w = WIDTH_BUTTON;
+    menu.buttonBox.h = HEIGHT_BUTTON;
     buttons[countButton] = menu;
     countButton++;
 }
@@ -51,11 +59,16 @@ void DrawScene()
     case 0:
         EG_DrawBackground(0);
         DrawButtons(settings.state);
+        EG_DrawText("PLAY", &buttons[0].buttonBox);
+        EG_DrawText("MENU", &buttons[1].buttonBox);
         ChangeScene();
         if (EG_GetKeyPress(SDL_SCANCODE_SPACE))
         {
             settings.state = 1;
         }
+        break;
+    case 1:
+        EG_DrawBackground(1);
         break;
     case 2:
         EG_DrawBackground(2);
@@ -75,20 +88,15 @@ void ChangeScene()
         {
             buttons[i].click = 1;
         }
-    }
-    for (int i = 0; i < MAX_BUTTONS; i++)
-    {
         switch (buttons[i].click)
         {
         case 1:
             settings.state = buttons[i].nextState;
             break;
-        
         default:
             break;
         }
     }
-    
 }
 
 void DrawButtons(int state)
@@ -99,10 +107,10 @@ void DrawButtons(int state)
         {
             if (mouseX >= buttons[i].posX && mouseX <= buttons[i].posX + WIDTH_BUTTON && mouseY >= buttons[i].posY && mouseY <= buttons[i].posY + HEIGHT_BUTTON)
             {
-                EG_DrawSprite(7, buttons[i].posX, buttons[i].posY, WIDTH_BUTTON, HEIGHT_BUTTON, NULL);
+                EG_DrawSprite(7, buttons[i].buttonBox.x, buttons[i].buttonBox.y, buttons[i].buttonBox.w, buttons[i].buttonBox.h, &buttons[i].buttonBox);
             }
             else
-                EG_DrawSprite(8, buttons[i].posX, buttons[i].posY, WIDTH_BUTTON, HEIGHT_BUTTON, NULL);
+                EG_DrawSprite(8, buttons[i].posX, buttons[i].posY, buttons[i].buttonBox.w, buttons[i].buttonBox.h, &buttons[i].buttonBox);
         }
     }
 }

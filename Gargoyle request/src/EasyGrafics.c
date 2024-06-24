@@ -1,4 +1,5 @@
 #include <EasyGrafics.h>
+#include <stdio.h>
 
 extern windowSettings settings;
 extern Demon demon;
@@ -14,6 +15,17 @@ int EG_InitSystem(char *title, int widthScreen, int heightScreen)
         return (1);
     if (InitSprites())
         return (1);
+    if (TTF_Init())
+        printf("%s\n", TTF_GetError());
+    settings.font = TTF_OpenFont("./font/FreeSans.otf", 10);
+    if (!settings.font)
+    {
+        printf("%s\n", TTF_GetError());
+        return (1);
+    }
+    SDL_Color colorBlack = {0, 0, 0};
+    TTF_SetFontSize(settings.font, 10);
+    settings.color = colorBlack;
 
     return (0);
 }
@@ -32,6 +44,9 @@ void EG_End()
     }
     SDL_DestroyWindow(settings.window);
     SDL_Quit();
+    TTF_CloseFont(settings.font);
+    settings.font = NULL;
+    TTF_Quit();
 }
 
 void EG_DrawBackground(int sprite)
@@ -115,4 +130,23 @@ float EG_DeltaTime()
 int EG_CheckClick()
 {
     return (SDL_GetMouseState(&mouseX, &mouseY));
+}
+
+void EG_DrawText(const char *text, SDL_Rect *dstrect)
+{
+    if (!(settings.textSurface = TTF_RenderText_Solid(settings.font, text, settings.color)))
+        printf("%s\n", TTF_GetError());
+    else
+    {
+        SDL_Rect textRect;
+
+        textRect = *dstrect;
+        textRect.w = dstrect->w * 0.5;
+        textRect.h = dstrect->h * 0.5;
+        textRect.x = dstrect->x + 80;
+        textRect.y = dstrect->y + 20;
+
+        settings.textTexture = SDL_CreateTextureFromSurface(settings.render, settings.textSurface);
+        SDL_RenderCopy(settings.render, settings.textTexture, NULL, &textRect);
+    }
 }
