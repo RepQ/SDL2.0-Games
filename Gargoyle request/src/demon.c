@@ -1,72 +1,93 @@
 #include <demon.h>
 
-Demon demon;
-float counter = 0;
+float count = 0.0f;
 
-void UpdateDemon()
+void SetDemonVelX(Demon *demon, float velx)
 {
-    windowSettings *wSettings;
-    playerStates *playerBase;
-
-    float deltaTime;
-
-    playerBase = getPlayer();
-    wSettings = window();
-    deltaTime = wSettings->deltaTime;
-    if (playerBase->jump)
-    {
-        playerBase->posY -= playerBase->velJump;
-    }
-    else
-    {
-        playerBase->posY += playerBase->velY * deltaTime;
-    }
-
-    if (playerBase->posY > (WINDOW_HEIGHT - playerBase->playerBox.h))
-        playerBase->posY = (WINDOW_HEIGHT - playerBase->playerBox.h);
-    else if (playerBase->posY < 0)
-        playerBase->posY = 0;
-    playerBase->posX += playerBase->velX * deltaTime;
-
-    playerBase->playerBox.x = playerBase->posX;
-    playerBase->playerBox.y = playerBase->posY;
+    demon->velX = velx;
 }
 
-void DrawDemon()
+void SetDemonVelY(Demon *demon, float vely)
 {
-    float deltaTime;
-    windowSettings *wSettings;
-    playerStates *player;
+    demon->velY = vely;
+}
 
-    wSettings = window();
-    player = getPlayer();
-    deltaTime = wSettings->deltaTime;
-    counter += (deltaTime);
+void SetDemonPosX(Demon *demon, float posx)
+{
+    demon->posX = posx;
+    demon->demonBox.x = posx;
+}
 
-    if (counter >= 0.1f)
+void SetDemonPosY(Demon *demon, float posy)
+{
+    demon->posY = posy;
+    demon->demonBox.y = posy;
+}
+
+void SetDemonSprite(Demon *demon, int sprite)
+{
+    demon->sprite = sprite;
+}
+
+void SetDemonWidth(Demon *demon, int width)
+{
+    demon->demonBox.w = width;
+}
+
+void SetDemonHeight(Demon *demon, int height)
+{
+    demon->demonBox.h = height;
+}
+
+void SetDemonVelJump(Demon *demon, float velJump)
+{
+    demon->velJump = velJump;
+}
+
+void CreateDemon(Demon *demon, float velx, float vely, float veljump, float posx, float posy,
+                 int sprite, int width, int height)
+{
+    demon->jump = 0;
+    SetDemonVelJump(demon, veljump);
+    SetDemonVelX(demon, velx);
+    SetDemonVelY(demon, vely);
+    SetDemonPosX(demon, posx);
+    SetDemonPosY(demon, posy);
+    SetDemonSprite(demon, sprite);
+    SetDemonWidth(demon, width);
+    SetDemonHeight(demon, height);
+}
+
+void UpdateDemon(Demon *demon)
+{
+    float newposY;
+    switch (demon->jump)
     {
-        counter = 0.0f;
-        player->sprite = (player->sprite + 1) % 7;
+    case 1:
+        demon->posY -= demon->velJump;
+        break;
+    case 0:
+        demon->posY += (demon->velY * EG_DeltaTime());
+        break;
+    default:
+        break;
     }
-
-    SDL_RenderCopy(wSettings->render, wSettings->texturePlayer[player->sprite], NULL, &player->playerBox);
+    if (demon->posY > WINDOW_HEIGHT - HEIGHT_DEMON)
+        demon->posY = WINDOW_HEIGHT - HEIGHT_DEMON;
+    if (demon->posY < 0)
+        demon->posY = 0;
+    newposY = demon->posY;
+    SetDemonPosY(demon, newposY);
 }
 
-void    SetVelJump(playerStates *player, float velJump)
+void DrawDemon(Demon *demon)
 {
-    player->velJump = velJump;
-}
+    count += EG_DeltaTime();
 
-void SetDemon()
-{
-    playerStates *playerBase;
-
-    playerBase = getPlayer();
-
-    SetVelJump(playerBase, JUMP);
-    SetPlayerSprite(playerBase, DEMON);
-    SetUpdatePlayer(playerBase, UpdateDemon);
-    SetDrawPlayer(playerBase, DrawDemon);
-    SetPlayer(WIDTH_DEMON, HEIGHT_DEMON, (WINDOW_WIDTH - WIDTH_DEMON) / 2,
-              (WINDOW_HEIGHT - HEIGHT_DEMON) / 2, 0, GRAVITY);
+    if (count >= 0.1f)
+    {
+        demon->sprite = (demon->sprite + 1) % DEMONSPRITES;
+        count = 0.0f;
+    }
+    EG_DrawSprite(demon->sprite, demon->posX, demon->posY, WIDTH_DEMON, HEIGHT_DEMON, &demon->demonBox);
 }

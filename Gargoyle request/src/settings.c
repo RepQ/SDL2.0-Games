@@ -1,15 +1,8 @@
+#include <EasyGrafics.h>
 #include <settings.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_timer.h>
 #include <stdio.h>
 
-windowSettings settings;
-
-void    InitState()
-{
-    settings.state = 0;
-}
+extern windowSettings settings;
 
 int InitWindow(char *title, int widthScreen, int heightScreen)
 {
@@ -24,22 +17,21 @@ int InitWindow(char *title, int widthScreen, int heightScreen)
     }
 
     settings.window = SDL_CreateWindow(title,
-                                        SDL_WINDOWPOS_CENTERED,
-                                        SDL_WINDOWPOS_CENTERED,
-                                        widthScreen, heightScreen, 0);
+                                       SDL_WINDOWPOS_CENTERED,
+                                       SDL_WINDOWPOS_CENTERED,
+                                       widthScreen, heightScreen, 0);
     if (!settings.window)
     {
         printf("Error al crear la ventana %s\n", SDL_GetError());
         return (1);
     }
     settings.render = SDL_CreateRenderer(settings.window, -1,
-                                          SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+                                         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!settings.render)
     {
         printf("Error al crear el renderer %s\n", SDL_GetError());
         return (1);
     }
-    settings.running = 1;
     return (0);
 }
 
@@ -48,7 +40,7 @@ int InitBackground()
     int number;
 
     number = 0;
-    for (int i = 0; i < MAX_BACKGROUNDS ; i++)
+    for (int i = 0; i < MAX_BACKGROUNDS; i++)
     {
         char *str = "./Decorados/";
         char fullstr[MAX_LENGHTBACKGROUNDS];
@@ -108,26 +100,20 @@ int InitSprites()
     return (0);
 }
 
-void PaintBackground()
+float GetTime()
 {
-    SDL_RenderCopy(settings.render, settings.texture[settings.state], NULL, NULL);
+    settings.currentTime = SDL_GetTicks64();
+    settings.deltaTime = (settings.currentTime - settings.lastTime) / 1000.0f;
+    settings.lastTime = settings.currentTime;
+    return (settings.deltaTime);
 }
 
-void FreeMemSettings()
+void ChangeState(int newState)
 {
-    for (int i = 0; i < MAX_BACKGROUNDS; i++)
-    {
-        SDL_FreeSurface(settings.surface[i]);
-        SDL_DestroyTexture(settings.texture[i]);
-    }
-    for (int i = 0; i < MAX_SPRITES; i++)
-    {
-        SDL_FreeSurface(settings.surfacePlayer[i]);
-        SDL_DestroyTexture(settings.texturePlayer[i]);
-    }
+    settings.state = newState;
 }
 
-windowSettings  *window()
+windowSettings *window()
 {
     return (&settings);
 }

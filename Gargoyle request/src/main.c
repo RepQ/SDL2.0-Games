@@ -2,40 +2,34 @@
  * 	PRUEBA DE MAIN V1.0 CODIGO CON IMPLEMENTACION LIBRERIA SDL GRAFICOS	*
  * 																		*
  ********************************************************************************/
-#include <string.h>
-#include <stdio.h>
-#include <math.h>
-#include <Initialize.h>
-#include <player.h>
+#include <EasyGrafics.h>
+#include <commonSettings.h>
+#include <scenes.h>
 #include <demon.h>
 #include <settings.h>
-#include <commonSettings.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <stdio.h>
+
+windowSettings settings;
+Demon demon;
+int running;
 
 int main(int argc, char **argv)
 {
-	if (InitSystem() != 0)
-		return (1);
-	windowSettings *wSettings;
 
-	wSettings = window();
-	SetDemon();
-	while (wSettings->running)
+	EG_InitSystem(TITLE, WINDOW_WIDTH, WINDOW_HEIGHT);
+	InitScenes();
+	running = 1;
+	while (running)
 	{
-		ClearScreen();
-		Update();
+		EG_Update();
 
-		// int mouseX;
-		// int mouseY;
-
-		// SDL_GetMouseState(&mouseX, &mouseY);
-		UpdatePlayer();
-		Draw();
-		Render();
+		DrawScene();
+		EG_Render();
 	}
-	FreeMemory();
+	EG_End();
 	return (0);
 }
