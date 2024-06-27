@@ -1,6 +1,5 @@
-#include <EasyGrafics.h>
 #include <settings.h>
-#include <stdio.h>
+
 
 extern windowSettings settings;
 
@@ -97,6 +96,19 @@ int InitSprites()
     }
     strcpy(settings.sprites[MAX_SPRITES], "\0");
     number = 0;
+    return (0);
+}
+
+int InitFont()
+{
+    if (TTF_Init())
+        printf("%s\n", TTF_GetError());
+    settings.font = TTF_OpenFont("./font/FreeSans.otf", 10);
+    if (!settings.font)
+    {
+        printf("%s\n", TTF_GetError());
+        return (1);
+    }
     return (0);
 }
 

@@ -1,12 +1,13 @@
 #ifndef __SCENES_H_
 #define __SCENES_H_
 
-#include <commonSettings.h>
+#include <EasyGrafics.h>
+#include <demon.h>
+#include <buttons.h>
+#include <obstacles.h>
 
 void InitScenes();
 void DrawScene();
-void DrawButtons(int state);
 void ChangeScene();
-void CreatePlayButton();
-void CreateMenuButton();
+
 #endif

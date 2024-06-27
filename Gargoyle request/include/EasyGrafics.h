@@ -1,9 +1,8 @@
 #ifndef __EASYGRAFICS_H_
 #define __EASYGRAFICS_H_
 
+
 #include <settings.h>
-#include <demon.h>
-#include <commonSettings.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -18,5 +17,5 @@ void EG_DrawBackground(int sprite);
 void EG_DrawSprite(int sprite, float posx, float posy, float width, float height,  SDL_Rect *dsrect);
 void EG_DrawText(const char *text, SDL_Rect *rect);
 void EG_Render();
-int EG_CheckClick();
+int EG_CheckClick(int *mouseX, int *mouseY);
 #endif

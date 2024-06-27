@@ -1,11 +1,9 @@
 #include <EasyGrafics.h>
 #include <stdio.h>
 
+
 extern windowSettings settings;
-extern Demon demon;
 extern int running;
-extern int mouseX;
-extern int mouseY;
 
 int EG_InitSystem(char *title, int widthScreen, int heightScreen)
 {
@@ -15,14 +13,8 @@ int EG_InitSystem(char *title, int widthScreen, int heightScreen)
         return (1);
     if (InitSprites())
         return (1);
-    if (TTF_Init())
-        printf("%s\n", TTF_GetError());
-    settings.font = TTF_OpenFont("./font/FreeSans.otf", 10);
-    if (!settings.font)
-    {
-        printf("%s\n", TTF_GetError());
+    if (InitFont())
         return (1);
-    }
     SDL_Color colorBlack = {0, 0, 0};
     TTF_SetFontSize(settings.font, 10);
     settings.color = colorBlack;
@@ -106,15 +98,15 @@ void EG_Update()
             break;
         case SDL_KEYDOWN:
             settings.KeyPressed = event.key.keysym.scancode;
-            if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
-                demon.jump = 1;
-            else if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-                running = 0;
+            // if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+            //     demon.jump = 1;
+            // else if (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
+            //     running = 0;
             break;
         case SDL_KEYUP:
             settings.KeyPressed = 0;
-            if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
-                demon.jump = 0;
+            // if (event.key.keysym.scancode == SDL_SCANCODE_SPACE)
+            //     demon.jump = 0;
             break;
         default:
             break;
@@ -127,9 +119,9 @@ float EG_DeltaTime()
     return (settings.deltaTime);
 }
 
-int EG_CheckClick()
+int EG_CheckClick(int *mouseX, int *mouseY)
 {
-    return (SDL_GetMouseState(&mouseX, &mouseY));
+    return (SDL_GetMouseState(mouseX, mouseY));
 }
 
 void EG_DrawText(const char *text, SDL_Rect *dstrect)
@@ -143,8 +135,8 @@ void EG_DrawText(const char *text, SDL_Rect *dstrect)
         textRect = *dstrect;
         textRect.w = dstrect->w * 0.5;
         textRect.h = dstrect->h * 0.5;
-        textRect.x = dstrect->x + 80;
-        textRect.y = dstrect->y + 20;
+        textRect.x = dstrect->x + 70;
+        textRect.y = dstrect->y + 25;
 
         settings.textTexture = SDL_CreateTextureFromSurface(settings.render, settings.textSurface);
         SDL_RenderCopy(settings.render, settings.textTexture, NULL, &textRect);

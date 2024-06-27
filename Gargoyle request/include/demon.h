@@ -2,8 +2,6 @@
 #define __DEMON_H_
 
 #include <EasyGrafics.h>
-#include <SDL2/SDL.h>
-#include <commonSettings.h>
 
 typedef struct
 {

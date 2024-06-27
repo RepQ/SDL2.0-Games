@@ -1,4 +1,5 @@
 #include <demon.h>
+#include <math.h>
 
 float count = 0.0f;
 
@@ -60,24 +61,41 @@ void CreateDemon(Demon *demon, float velx, float vely, float veljump, float posx
 
 void UpdateDemon(Demon *demon)
 {
-    float newposY;
-    switch (demon->jump)
-    {
-    case 1:
-        demon->posY -= demon->velJump;
-        break;
-    case 0:
-        demon->posY += (demon->velY * EG_DeltaTime());
-        break;
-    default:
-        break;
-    }
+    float time = EG_DeltaTime();
+    float acceleration;
+
+    if (demon->jump == 1)
+        acceleration = -demon->velJump;
+    else
+        acceleration = GRAVITY;
+
+    demon->velY += acceleration * time;
+
+
+    demon->posY += demon->velY * time + 0.5f * acceleration * time * time;
+
+
     if (demon->posY > WINDOW_HEIGHT - HEIGHT_DEMON)
+    {
         demon->posY = WINDOW_HEIGHT - HEIGHT_DEMON;
+        demon->velY = 0;
+        demon->jump = 0;
+    }
     if (demon->posY < 0)
+    {
         demon->posY = 0;
-    newposY = demon->posY;
-    SetDemonPosY(demon, newposY);
+        demon->velY = 0;
+    }
+
+    SetDemonPosY(demon, demon->posY);
+
+    if (EG_GetKeyPress(SDL_SCANCODE_SPACE) && demon->jump == 0)
+    {
+        demon->jump = 1;
+        demon->velY = -demon->velJump;
+    }
+    else
+        demon->jump = 0;
 }
 
 void DrawDemon(Demon *demon)

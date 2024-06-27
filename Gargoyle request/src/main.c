@@ -3,7 +3,6 @@
  * 																		*
  ********************************************************************************/
 #include <EasyGrafics.h>
-#include <commonSettings.h>
 #include <scenes.h>
 #include <demon.h>
 #include <settings.h>
@@ -13,8 +12,6 @@
 #include <SDL2/SDL_timer.h>
 #include <stdio.h>
 
-windowSettings settings;
-Demon demon;
 int running;
 
 int main(int argc, char **argv)
