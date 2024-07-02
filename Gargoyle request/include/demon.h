@@ -5,6 +5,7 @@
 
 typedef struct
 {
+    int isAlive;
     float velX;
     float velY;
     float velJump;

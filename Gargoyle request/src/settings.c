@@ -1,7 +1,7 @@
 #include <settings.h>
 
 
-extern windowSettings settings;
+windowSettings settings;
 
 int InitWindow(char *title, int widthScreen, int heightScreen)
 {

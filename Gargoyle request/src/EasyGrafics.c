@@ -1,7 +1,6 @@
 #include <EasyGrafics.h>
 #include <stdio.h>
 
-
 extern windowSettings settings;
 extern int running;
 
@@ -141,4 +140,15 @@ void EG_DrawText(const char *text, SDL_Rect *dstrect)
         settings.textTexture = SDL_CreateTextureFromSurface(settings.render, settings.textSurface);
         SDL_RenderCopy(settings.render, settings.textTexture, NULL, &textRect);
     }
+}
+
+int EG_CollisionSquare(SDL_Rect *object, SDL_Rect *toCollision)
+{
+    if ((object->x + object->w > toCollision->x && object->x < toCollision->x + toCollision->w) &&
+        (object->y < toCollision->y + toCollision->h) && (object->y > toCollision->y))
+            return (1);
+    if ((object->x + object->w > toCollision->x && object->x < toCollision->x + toCollision->w) &&
+        (object->y + object->h < toCollision->y + toCollision->h) && (object->y + object->h > toCollision->y))
+            return (1);
+    return (0);
 }

@@ -12,11 +12,13 @@ typedef struct
     int width;
     int height;
     int sprite;
-    SDL_Rect obstacleBox;
+    SDL_Rect topObstacle;
+    SDL_Rect bottomObstacle;
+    SDL_Rect gateObstacle;;
 } Obstacle;
 
-void CreateObstacle(Obstacle *obstacle, float posX, float posY,
-                    float velX, float velY, int widht, int height, int sprite);
-void UpdateObstacle(Obstacle *obstacle);
-void DrawObstacle(Obstacle *obstacle);
+void CreateObstacles(float posX, float posY,
+                    float velX, float velY, int width, int height, int sprite);
+void UpdateObstacles();
+void DrawObstacles();
 #endif

@@ -2,6 +2,8 @@
 #include <math.h>
 
 float count = 0.0f;
+Demon demon;
+extern int running;
 
 void SetDemonVelX(Demon *demon, float velx)
 {
@@ -49,6 +51,7 @@ void CreateDemon(Demon *demon, float velx, float vely, float veljump, float posx
                  int sprite, int width, int height)
 {
     demon->jump = 0;
+    demon->isAlive = 1;
     SetDemonVelJump(demon, veljump);
     SetDemonVelX(demon, velx);
     SetDemonVelY(demon, vely);
@@ -61,6 +64,8 @@ void CreateDemon(Demon *demon, float velx, float vely, float veljump, float posx
 
 void UpdateDemon(Demon *demon)
 {
+    if (!demon->isAlive)
+        running = 0;
     float time = EG_DeltaTime();
     float acceleration;
 
@@ -73,6 +78,7 @@ void UpdateDemon(Demon *demon)
 
 
     demon->posY += demon->velY * time + 0.5f * acceleration * time * time;
+    demon->demonBox.y = demon->posY;
 
 
     if (demon->posY > WINDOW_HEIGHT - HEIGHT_DEMON)

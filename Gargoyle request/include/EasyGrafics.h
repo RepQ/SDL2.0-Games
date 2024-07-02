@@ -18,4 +18,6 @@ void EG_DrawSprite(int sprite, float posx, float posy, float width, float height
 void EG_DrawText(const char *text, SDL_Rect *rect);
 void EG_Render();
 int EG_CheckClick(int *mouseX, int *mouseY);
+
+int EG_CollisionSquare(SDL_Rect *object, SDL_Rect *toCollision);
 #endif

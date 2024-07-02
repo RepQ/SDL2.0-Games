@@ -2,12 +2,13 @@
 
 float posButton[2] = {(WINDOW_WIDTH - WIDTH_BUTTON) / 2, (WINDOW_HEIGHT - HEIGHT_BUTTON) / 2};
 int countButton = 0;
-extern Buttons buttons[MAX_BUTTONS];
+Buttons buttons[MAX_BUTTONS];
 extern windowSettings settings;
 
 void CreatePlayButton()
 {
     Buttons play;
+    play.type = PLAY;
     play.posX = posButton[0] - (posButton[0] * 0.4);
     play.posY = posButton[1] + (posButton[1] * 0.5);
     play.mouseOver = 0;
@@ -26,6 +27,7 @@ void CreatePlayButton()
 void CreateMenuButton()
 {
     Buttons menu;
+    menu.type = MENU;
     menu.posX = posButton[0] + (posButton[0] * 0.4);
     menu.posY = posButton[1] + (posButton[1] * 0.5);
     menu.mouseOver = 0;
@@ -45,6 +47,7 @@ void CreateBackButton()
 {
     Buttons back;
 
+    back.type = BACK;
     back.posX = posButton[0] - (posButton[0] * 0.8);
     back.posY = posButton[1] + (posButton[1] * 0.8);
     back.mouseOver = 0;
@@ -84,12 +87,32 @@ void DrawButtons(int state)
     {
         if (buttons[i].actualState == state)
         {
-            if (buttons[i].mouseOver)
+            switch (buttons[i].mouseOver)
             {
+            case 1:
                 EG_DrawSprite(7, buttons[i].buttonBox.x, buttons[i].buttonBox.y, buttons[i].buttonBox.w, buttons[i].buttonBox.h, &buttons[i].buttonBox);
-            }
-            else
+                break;
+            case 0:
                 EG_DrawSprite(8, buttons[i].posX, buttons[i].posY, buttons[i].buttonBox.w, buttons[i].buttonBox.h, &buttons[i].buttonBox);
+                break;
+            default:
+                break;
+            }
+            
+            switch (buttons[i].type)
+            {
+            case PLAY:
+                EG_DrawText("PLAY", &buttons[i].buttonBox);
+                break;
+            case MENU:
+                EG_DrawText("MENU", &buttons[i].buttonBox);
+                break;
+            case BACK:
+                EG_DrawText("BACK", &buttons[i].buttonBox);
+                break;
+            default:
+                break;
+            }
         }
     }
 }
