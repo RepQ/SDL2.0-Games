@@ -59,14 +59,6 @@ void UpdateObstacles()
             demon.isAlive = 0;
         if (EG_CollisionSquare(&demon.demonBox, &obstacles[i].bottomObstacle))
             demon.isAlive = 0;
-        // if ((demon.posX + demon.demonBox.w > obstacles[i].posX && demon.posX < obstacles[i].posX + obstacles[i].width) &&
-        //     (demon.posY < obstacles[i].topObstacle.h))
-        //     demon.isAlive = 0;
-
-        // // Colisiones con el obstáculo inferior
-        // if ((demon.posX + demon.demonBox.w > obstacles[i].posX && demon.posX < obstacles[i].posX + obstacles[i].width) &&
-        //     (demon.posY + demon.demonBox.h > obstacles[i].bottomObstacle.y))
-        //     demon.isAlive = 0;
 
         obstacles[i].posX -= (obstacles[i].velX * EG_DeltaTime());
 
@@ -84,6 +76,7 @@ void UpdateObstacles()
         }
         obstacles[i].topObstacle.x = obstacles[i].posX;
         obstacles[i].bottomObstacle.x = obstacles[i].posX;
+        obstacles[i].gateObstacle.x = obstacles[i].posX;
     }
 }
 

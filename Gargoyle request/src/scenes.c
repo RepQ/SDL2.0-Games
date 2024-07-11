@@ -1,6 +1,5 @@
 #include <scenes.h>
 
-
 extern windowSettings settings;
 extern Demon demon;
 extern Buttons buttons[MAX_BUTTONS];
@@ -8,7 +7,9 @@ extern Obstacle obstacles[MAX_OBSTACLES];
 
 void InitScenes()
 {
+    InitScore();
     CreateDemon(&demon, VELXDEMON, VELYDEMON, JUMP, POSXDEMON, POSYDEMON, 0, WIDTH_DEMON, HEIGHT_DEMON);
+    CreateElements();
     CreatePlayButton();
     CreateMenuButton();
     CreateBackButton();
@@ -31,18 +32,20 @@ void DrawScene()
         break;
     case 2:
         EG_DrawBackground(2);
+        UpdateScore();
+        UpdateElements();
         UpdateObstacles();
         UpdateDemon(&demon);
+        DrawElements();
         DrawDemon(&demon);
         DrawObstacles();
+        DrawScore();
         break;
     default:
         break;
     }
     ChangeScene();
 }
-
-
 
 void ChangeScene()
 {

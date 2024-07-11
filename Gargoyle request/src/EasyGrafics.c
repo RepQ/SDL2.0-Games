@@ -67,7 +67,7 @@ void EG_DrawSprite(int sprite, float posx, float posy, float width, float height
         rect->y = posy;
         rect->w = width;
         rect->h = height;
-        SDL_RenderCopy(settings.render, settings.texturePlayer[sprite], NULL, rect);
+        SDL_RenderCopy(settings.render, settings.texturePlayer[sprite], NULL, dsrect);
     }
 }
 
@@ -123,7 +123,7 @@ int EG_CheckClick(int *mouseX, int *mouseY)
     return (SDL_GetMouseState(mouseX, mouseY));
 }
 
-void EG_DrawText(const char *text, SDL_Rect *dstrect)
+void EG_DrawText(const char *text, float size, SDL_Rect *dstrect)
 {
     if (!(settings.textSurface = TTF_RenderText_Solid(settings.font, text, settings.color)))
         printf("%s\n", TTF_GetError());
@@ -132,8 +132,8 @@ void EG_DrawText(const char *text, SDL_Rect *dstrect)
         SDL_Rect textRect;
 
         textRect = *dstrect;
-        textRect.w = dstrect->w * 0.5;
-        textRect.h = dstrect->h * 0.5;
+        textRect.w = dstrect->w * size;
+        textRect.h = dstrect->h * size;
         textRect.x = dstrect->x + 70;
         textRect.y = dstrect->y + 25;
 

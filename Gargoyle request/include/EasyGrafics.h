@@ -15,7 +15,7 @@ void EG_Update();
 float EG_DeltaTime();
 void EG_DrawBackground(int sprite);
 void EG_DrawSprite(int sprite, float posx, float posy, float width, float height,  SDL_Rect *dsrect);
-void EG_DrawText(const char *text, SDL_Rect *rect);
+void EG_DrawText(const char *text, float size, SDL_Rect *rect);
 void EG_Render();
 int EG_CheckClick(int *mouseX, int *mouseY);
 

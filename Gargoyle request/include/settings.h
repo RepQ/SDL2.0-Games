@@ -13,10 +13,10 @@
 #define WINDOW_WIDTH (1600)
 #define WINDOW_HEIGHT (800)
 
-#define WIDTH_DEMON (100)
-#define HEIGHT_DEMON (100)
-#define GRAVITY (1550)
-#define JUMP (500)
+#define WIDTH_DEMON (80)
+#define HEIGHT_DEMON (80)
+#define GRAVITY (1200)
+#define JUMP (300)
 #define VELXDEMON (0)
 #define VELYDEMON (0)
 #define POSXDEMON ((WIDTH_DEMON) + 50)
@@ -36,6 +36,7 @@
 #define SPACE_DEMON (200)
 
 #define MAX_PLAYERS (1)
+#define MAX_ELEMENTS (20)
 
 
 typedef enum

@@ -102,13 +102,13 @@ void DrawButtons(int state)
             switch (buttons[i].type)
             {
             case PLAY:
-                EG_DrawText("PLAY", &buttons[i].buttonBox);
+                EG_DrawText("PLAY", 0.5, &buttons[i].buttonBox);
                 break;
             case MENU:
-                EG_DrawText("MENU", &buttons[i].buttonBox);
+                EG_DrawText("MENU", 0.5, &buttons[i].buttonBox);
                 break;
             case BACK:
-                EG_DrawText("BACK", &buttons[i].buttonBox);
+                EG_DrawText("BACK", 0.5, &buttons[i].buttonBox);
                 break;
             default:
                 break;

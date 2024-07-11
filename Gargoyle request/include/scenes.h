@@ -5,6 +5,8 @@
 #include <demon.h>
 #include <buttons.h>
 #include <obstacles.h>
+#include <Background.h>
+#include <pointManager.h>
 #include <stdlib.h>
 
 void InitScenes();
