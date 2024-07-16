@@ -31,6 +31,7 @@ void UpdateCloud()
 {
     for (int i = 0; i < 10; i++)
     {
+        sepx = 0.0f;
         cloud[i].posX += (cloud[i].velX * EG_DeltaTime());
 
         if (cloud[i].posX <= -(cloud[i].width))
@@ -43,9 +44,10 @@ void UpdateCloud()
                 if (cloud[i].posX > newPosX)
                     newPosX = cloud[i].posX;
             }
-            cloud[i].posX = newPosX + 300;
+            cloud[i].posX = newPosX + sepx;
         }
         cloud[i].element.x = cloud[i].posX;
+        sepx += SPACE_CLOUDS;
     }
 }
 

@@ -2,7 +2,7 @@
 #define __CLOUDS_H_
 
 #include <EasyGrafics.h>
-#define SPACE_CLOUDS (200)
+#define SPACE_CLOUDS (800)
 typedef struct
 {
     SDL_Rect element;
