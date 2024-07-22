@@ -8,7 +8,7 @@ int EG_InitSystem(char *title, int widthScreen, int heightScreen)
 {
     if (InitWindow(title, widthScreen, heightScreen))
         return (1);
-    if (InitBackground())
+    /*if (InitBackground())
         return (1);
     if (InitSprites())
         return (1);
@@ -17,7 +17,7 @@ int EG_InitSystem(char *title, int widthScreen, int heightScreen)
     SDL_Color colorBlack = {0, 0, 0};
     TTF_SetFontSize(settings.font, 10);
     settings.color = colorBlack;
-
+*/
     return (0);
 }
 
